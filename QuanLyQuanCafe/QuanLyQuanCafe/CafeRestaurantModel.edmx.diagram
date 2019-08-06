@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e5c9a4aa0e774864ac181d98018d6297" Name="Diagram1">
+        <EntityTypeShape EntityType="CafeRestaurantModel.Ban" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeRestaurantModel.DonHang" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeRestaurantModel.HoaDon" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeRestaurantModel.LoaiNuoc" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeRestaurantModel.SuKien" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeRestaurantModel.TaiKhoan" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CafeRestaurantModel.ThucUong" Width="1.5" PointX="3" PointY="12.625" IsExpanded="true" />
+        <AssociationConnector Association="CafeRestaurantModel.FK__HoaDon__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeRestaurantModel.FK__DonHang__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeRestaurantModel.FK__DonHang__MaHD__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeRestaurantModel.FK__HoaDon__MaNV__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeRestaurantModel.FK__HoaDon__MaSuKien__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="CafeRestaurantModel.FK__ThucUong__MaLoai__15502E78" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

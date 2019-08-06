@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CafeRestaurantModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ban">
+          <Key>
+            <PropertyRef Name="MaBan" />
+            <PropertyRef Name="MaTang" />
+          </Key>
+          <Property Name="MaBan" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MaTang" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TenBan" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="TrangThai" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="DonHang">
+          <Key>
+            <PropertyRef Name="MaDonHang" />
+          </Key>
+          <Property Name="MaDonHang" Type="nchar" MaxLength="12" Nullable="false" />
+          <Property Name="MaThucUong" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MaLoai" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="SoLuong" Type="tinyint" Nullable="false" />
+          <Property Name="MaHD" Type="nchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HoaDon">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="nchar" MaxLength="12" Nullable="false" />
+          <Property Name="NgayHD" Type="date" Nullable="false" />
+          <Property Name="MaNV" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaBan" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MaTang" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="TongTien" Type="int" />
+          <Property Name="MaSuKien" Type="nvarchar" MaxLength="10" />
+          <Property Name="DuaTruoc" Type="int" />
+          <Property Name="ConLai" Type="int" />
+        </EntityType>
+        <EntityType Name="LoaiNuoc">
+          <Key>
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaLoai" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="TenLoai" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SuKien">
+          <Key>
+            <PropertyRef Name="MaSuKien" />
+          </Key>
+          <Property Name="MaSuKien" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenSuKien" Type="nvarchar" MaxLength="256" />
+          <Property Name="TyLeGiam" Type="tinyint" />
+          <Property Name="SoLuong" Type="smallint" />
+          <Property Name="ThoiGian_BD" Type="datetime" />
+          <Property Name="ThoiGian_KT" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="HoTen" Type="nvarchar" MaxLength="100" />
+          <Property Name="MatKhau" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LoaiTaiKhoan" Type="bit" />
+          <Property Name="CMND" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="NgaySinh" Type="date" Nullable="false" />
+          <Property Name="SoDT" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ConLam" Type="bit" />
+        </EntityType>
+        <EntityType Name="ThucUong">
+          <Key>
+            <PropertyRef Name="MaThucUong" />
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaThucUong" Type="nchar" MaxLength="5" Nullable="false" />
+          <Property Name="MaLoai" Type="nchar" MaxLength="4" Nullable="false" />
+          <Property Name="TenThucUong" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DonGia" Type="smallmoney" />
+          <Property Name="KhaDung" Type="bit" />
+        </EntityType>
+        <Association Name="FK__DonHang__403A8C7D">
+          <End Role="ThucUong" Type="Self.ThucUong" Multiplicity="1" />
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThucUong">
+              <PropertyRef Name="MaThucUong" />
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="DonHang">
+              <PropertyRef Name="MaThucUong" />
+              <PropertyRef Name="MaLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DonHang__MaHD__412EB0B6">
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="1" />
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HoaDon">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="DonHang">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoaDon__398D8EEE">
+          <End Role="Ban" Type="Self.Ban" Multiplicity="1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ban">
+              <PropertyRef Name="MaBan" />
+              <PropertyRef Name="MaTang" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaBan" />
+              <PropertyRef Name="MaTang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoaDon__MaNV__3A81B327">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="TenDangNhap" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoaDon__MaSuKien__3B75D760">
+          <End Role="SuKien" Type="Self.SuKien" Multiplicity="0..1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuKien">
+              <PropertyRef Name="MaSuKien" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaSuKien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThucUong__MaLoai__286302EC">
+          <End Role="LoaiNuoc" Type="Self.LoaiNuoc" Multiplicity="1" />
+          <End Role="ThucUong" Type="Self.ThucUong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiNuoc">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="ThucUong">
+              <PropertyRef Name="MaLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="fn_DateToString" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nchar">
+          <Parameter Name="Ngay" Type="date" Mode="In" />
+        </Function>
+        <Function Name="fn_SinhMaDH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nchar" />
+        <Function Name="fn_SinhMaHD" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nchar" />
+        <Function Name="fn_TaoID_TiepTheo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nchar">
+          <Parameter Name="ID_BanDau" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemBan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaBan" Type="nchar" Mode="In" />
+          <Parameter Name="MaTang" Type="nchar" Mode="In" />
+          <Parameter Name="TenBan" Type="nvarchar" Mode="In" />
+          <Parameter Name="TrangThai" Type="tinyint" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemDonHang" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaDonHang" Type="nchar" Mode="In" />
+          <Parameter Name="MaThucUong" Type="nchar" Mode="In" />
+          <Parameter Name="MaLoai" Type="nchar" Mode="In" />
+          <Parameter Name="SoLuong" Type="tinyint" Mode="In" />
+          <Parameter Name="MaHD" Type="nchar" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemHoaDon" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaHD" Type="nchar" Mode="In" />
+          <Parameter Name="NgayHD" Type="date" Mode="In" />
+          <Parameter Name="MaNV" Type="nvarchar" Mode="In" />
+          <Parameter Name="MaBan" Type="nchar" Mode="In" />
+          <Parameter Name="MaTang" Type="nchar" Mode="In" />
+          <Parameter Name="TongTien" Type="int" Mode="In" />
+          <Parameter Name="MaSuKien" Type="nvarchar" Mode="In" />
+          <Parameter Name="DuaTruoc" Type="int" Mode="In" />
+          <Parameter Name="ConLai" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemLoaiNuoc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaLoai" Type="nchar" Mode="In" />
+          <Parameter Name="TenLoai" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemSuKien" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaSuKien" Type="nvarchar" Mode="In" />
+          <Parameter Name="TenSuKien" Type="nvarchar" Mode="In" />
+          <Parameter Name="TyLeGiam" Type="tinyint" Mode="In" />
+          <Parameter Name="SoLuong" Type="smallint" Mode="In" />
+          <Parameter Name="ThoiGian_BD" Type="datetime" Mode="In" />
+          <Parameter Name="ThoiGian_KT" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemTaiKhoan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TenDangNhap" Type="nvarchar" Mode="In" />
+          <Parameter Name="HoTen" Type="nvarchar" Mode="In" />
+          <Parameter Name="MatKhau" Type="nvarchar" Mode="In" />
+          <Parameter Name="LoaiTaiKhoan" Type="bit" Mode="In" />
+          <Parameter Name="CMND" Type="nvarchar" Mode="In" />
+          <Parameter Name="NgaySinh" Type="date" Mode="In" />
+          <Parameter Name="SoDT" Type="nvarchar" Mode="In" />
+          <Parameter Name="ConLam" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="usp_ThemThucUong" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MaThucUong" Type="nchar" Mode="In" />
+          <Parameter Name="MaLoai" Type="nchar" Mode="In" />
+          <Parameter Name="TenThucUong" Type="nvarchar" Mode="In" />
+          <Parameter Name="DonGia" Type="smallmoney" Mode="In" />
+          <Parameter Name="KhaDung" Type="bit" Mode="In" />
+        </Function>
+        <EntityContainer Name="CafeRestaurantModelStoreContainer">
+          <EntitySet Name="Ban" EntityType="Self.Ban" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DonHang" EntityType="Self.DonHang" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HoaDon" EntityType="Self.HoaDon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoaiNuoc" EntityType="Self.LoaiNuoc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SuKien" EntityType="Self.SuKien" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ThucUong" EntityType="Self.ThucUong" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DonHang__403A8C7D" Association="Self.FK__DonHang__403A8C7D">
+            <End Role="ThucUong" EntitySet="ThucUong" />
+            <End Role="DonHang" EntitySet="DonHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DonHang__MaHD__412EB0B6" Association="Self.FK__DonHang__MaHD__412EB0B6">
+            <End Role="HoaDon" EntitySet="HoaDon" />
+            <End Role="DonHang" EntitySet="DonHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoaDon__398D8EEE" Association="Self.FK__HoaDon__398D8EEE">
+            <End Role="Ban" EntitySet="Ban" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoaDon__MaNV__3A81B327" Association="Self.FK__HoaDon__MaNV__3A81B327">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoaDon__MaSuKien__3B75D760" Association="Self.FK__HoaDon__MaSuKien__3B75D760">
+            <End Role="SuKien" EntitySet="SuKien" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThucUong__MaLoai__286302EC" Association="Self.FK__ThucUong__MaLoai__286302EC">
+            <End Role="LoaiNuoc" EntitySet="LoaiNuoc" />
+            <End Role="ThucUong" EntitySet="ThucUong" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CafeRestaurantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ban">
+          <Key>
+            <PropertyRef Name="MaBan" />
+            <PropertyRef Name="MaTang" />
+          </Key>
+          <Property Name="MaBan" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MaTang" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TenBan" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TrangThai" Type="Byte" />
+          <NavigationProperty Name="HoaDon" Relationship="Self.FK__HoaDon__267ABA7A" FromRole="Ban" ToRole="HoaDon" />
+        </EntityType>
+        <EntityType Name="DonHang">
+          <Key>
+            <PropertyRef Name="MaDonHang" />
+          </Key>
+          <Property Name="MaDonHang" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MaThucUong" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MaLoai" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="SoLuong" Type="Byte" Nullable="false" />
+          <Property Name="MaHD" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ThucUong" Relationship="Self.FK__DonHang__2D27B809" FromRole="DonHang" ToRole="ThucUong" />
+          <NavigationProperty Name="HoaDon" Relationship="Self.FK__DonHang__MaHD__2E1BDC42" FromRole="DonHang" ToRole="HoaDon" />
+        </EntityType>
+        <EntityType Name="HoaDon">
+          <Key>
+            <PropertyRef Name="MaHD" />
+          </Key>
+          <Property Name="MaHD" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="NgayHD" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MaNV" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MaBan" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MaTang" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TongTien" Type="Int32" />
+          <Property Name="MaSuKien" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="DuaTruoc" Type="Int32" />
+          <Property Name="ConLai" Type="Int32" />
+          <NavigationProperty Name="Ban" Relationship="Self.FK__HoaDon__267ABA7A" FromRole="HoaDon" ToRole="Ban" />
+          <NavigationProperty Name="DonHang" Relationship="Self.FK__DonHang__MaHD__2E1BDC42" FromRole="HoaDon" ToRole="DonHang" />
+          <NavigationProperty Name="TaiKhoan" Relationship="Self.FK__HoaDon__MaNV__276EDEB3" FromRole="HoaDon" ToRole="TaiKhoan" />
+          <NavigationProperty Name="SuKien" Relationship="Self.FK__HoaDon__MaSuKien__286302EC" FromRole="HoaDon" ToRole="SuKien" />
+        </EntityType>
+        <EntityType Name="LoaiNuoc">
+          <Key>
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaLoai" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TenLoai" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ThucUong" Relationship="Self.FK__ThucUong__MaLoai__15502E78" FromRole="LoaiNuoc" ToRole="ThucUong" />
+        </EntityType>
+        <EntityType Name="SuKien">
+          <Key>
+            <PropertyRef Name="MaSuKien" />
+          </Key>
+          <Property Name="MaSuKien" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TenSuKien" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="TyLeGiam" Type="Byte" />
+          <Property Name="SoLuong" Type="Int16" />
+          <Property Name="ThoiGian_BD" Type="DateTime" Precision="3" />
+          <Property Name="ThoiGian_KT" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="HoaDon" Relationship="Self.FK__HoaDon__MaSuKien__286302EC" FromRole="SuKien" ToRole="HoaDon" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="TenDangNhap" />
+          </Key>
+          <Property Name="TenDangNhap" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="HoTen" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MatKhau" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoaiTaiKhoan" Type="Boolean" />
+          <Property Name="CMND" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NgaySinh" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="SoDT" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ConLam" Type="Boolean" />
+          <NavigationProperty Name="HoaDon" Relationship="Self.FK__HoaDon__MaNV__276EDEB3" FromRole="TaiKhoan" ToRole="HoaDon" />
+        </EntityType>
+        <EntityType Name="ThucUong">
+          <Key>
+            <PropertyRef Name="MaThucUong" />
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaThucUong" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="MaLoai" Type="String" MaxLength="4" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="TenThucUong" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DonGia" Type="Decimal" Precision="10" Scale="4" />
+          <Property Name="KhaDung" Type="Boolean" />
+          <NavigationProperty Name="DonHang" Relationship="Self.FK__DonHang__2D27B809" FromRole="ThucUong" ToRole="DonHang" />
+          <NavigationProperty Name="LoaiNuoc" Relationship="Self.FK__ThucUong__MaLoai__15502E78" FromRole="ThucUong" ToRole="LoaiNuoc" />
+        </EntityType>
+        <Association Name="FK__HoaDon__267ABA7A">
+          <End Role="Ban" Type="Self.Ban" Multiplicity="1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ban">
+              <PropertyRef Name="MaBan" />
+              <PropertyRef Name="MaTang" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaBan" />
+              <PropertyRef Name="MaTang" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DonHang__2D27B809">
+          <End Role="ThucUong" Type="Self.ThucUong" Multiplicity="1" />
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ThucUong">
+              <PropertyRef Name="MaThucUong" />
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="DonHang">
+              <PropertyRef Name="MaThucUong" />
+              <PropertyRef Name="MaLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DonHang__MaHD__2E1BDC42">
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="1" />
+          <End Role="DonHang" Type="Self.DonHang" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HoaDon">
+              <PropertyRef Name="MaHD" />
+            </Principal>
+            <Dependent Role="DonHang">
+              <PropertyRef Name="MaHD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoaDon__MaNV__276EDEB3">
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaiKhoan">
+              <PropertyRef Name="TenDangNhap" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaNV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__HoaDon__MaSuKien__286302EC">
+          <End Role="SuKien" Type="Self.SuKien" Multiplicity="0..1" />
+          <End Role="HoaDon" Type="Self.HoaDon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuKien">
+              <PropertyRef Name="MaSuKien" />
+            </Principal>
+            <Dependent Role="HoaDon">
+              <PropertyRef Name="MaSuKien" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ThucUong__MaLoai__15502E78">
+          <End Role="LoaiNuoc" Type="Self.LoaiNuoc" Multiplicity="1" />
+          <End Role="ThucUong" Type="Self.ThucUong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiNuoc">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="ThucUong">
+              <PropertyRef Name="MaLoai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CafeRestaurantEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ban" EntityType="Self.Ban" />
+          <EntitySet Name="DonHang" EntityType="Self.DonHang" />
+          <EntitySet Name="HoaDon" EntityType="Self.HoaDon" />
+          <EntitySet Name="LoaiNuoc" EntityType="Self.LoaiNuoc" />
+          <EntitySet Name="SuKien" EntityType="Self.SuKien" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" />
+          <EntitySet Name="ThucUong" EntityType="Self.ThucUong" />
+          <AssociationSet Name="FK__HoaDon__267ABA7A" Association="Self.FK__HoaDon__267ABA7A">
+            <End Role="Ban" EntitySet="Ban" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DonHang__2D27B809" Association="Self.FK__DonHang__2D27B809">
+            <End Role="ThucUong" EntitySet="ThucUong" />
+            <End Role="DonHang" EntitySet="DonHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DonHang__MaHD__2E1BDC42" Association="Self.FK__DonHang__MaHD__2E1BDC42">
+            <End Role="HoaDon" EntitySet="HoaDon" />
+            <End Role="DonHang" EntitySet="DonHang" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoaDon__MaNV__276EDEB3" Association="Self.FK__HoaDon__MaNV__276EDEB3">
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__HoaDon__MaSuKien__286302EC" Association="Self.FK__HoaDon__MaSuKien__286302EC">
+            <End Role="SuKien" EntitySet="SuKien" />
+            <End Role="HoaDon" EntitySet="HoaDon" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ThucUong__MaLoai__15502E78" Association="Self.FK__ThucUong__MaLoai__15502E78">
+            <End Role="LoaiNuoc" EntitySet="LoaiNuoc" />
+            <End Role="ThucUong" EntitySet="ThucUong" />
+          </AssociationSet>
+          <FunctionImport Name="usp_ThemBan">
+            <Parameter Name="MaBan" Mode="In" Type="String" />
+            <Parameter Name="MaTang" Mode="In" Type="String" />
+            <Parameter Name="TenBan" Mode="In" Type="String" />
+            <Parameter Name="TrangThai" Mode="In" Type="Byte" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemDonHang">
+            <Parameter Name="MaDonHang" Mode="In" Type="String" />
+            <Parameter Name="MaThucUong" Mode="In" Type="String" />
+            <Parameter Name="MaLoai" Mode="In" Type="String" />
+            <Parameter Name="SoLuong" Mode="In" Type="Byte" />
+            <Parameter Name="MaHD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemHoaDon">
+            <Parameter Name="MaHD" Mode="In" Type="String" />
+            <Parameter Name="NgayHD" Mode="In" Type="DateTime" />
+            <Parameter Name="MaNV" Mode="In" Type="String" />
+            <Parameter Name="MaBan" Mode="In" Type="String" />
+            <Parameter Name="MaTang" Mode="In" Type="String" />
+            <Parameter Name="TongTien" Mode="In" Type="Int32" />
+            <Parameter Name="MaSuKien" Mode="In" Type="String" />
+            <Parameter Name="DuaTruoc" Mode="In" Type="Int32" />
+            <Parameter Name="ConLai" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemLoaiNuoc">
+            <Parameter Name="MaLoai" Mode="In" Type="String" />
+            <Parameter Name="TenLoai" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemSuKien">
+            <Parameter Name="MaSuKien" Mode="In" Type="String" />
+            <Parameter Name="TenSuKien" Mode="In" Type="String" />
+            <Parameter Name="TyLeGiam" Mode="In" Type="Byte" />
+            <Parameter Name="SoLuong" Mode="In" Type="Int16" />
+            <Parameter Name="ThoiGian_BD" Mode="In" Type="DateTime" />
+            <Parameter Name="ThoiGian_KT" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemTaiKhoan">
+            <Parameter Name="TenDangNhap" Mode="In" Type="String" />
+            <Parameter Name="HoTen" Mode="In" Type="String" />
+            <Parameter Name="MatKhau" Mode="In" Type="String" />
+            <Parameter Name="LoaiTaiKhoan" Mode="In" Type="Boolean" />
+            <Parameter Name="CMND" Mode="In" Type="String" />
+            <Parameter Name="NgaySinh" Mode="In" Type="DateTime" />
+            <Parameter Name="SoDT" Mode="In" Type="String" />
+            <Parameter Name="ConLam" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="usp_ThemThucUong">
+            <Parameter Name="MaThucUong" Mode="In" Type="String" />
+            <Parameter Name="MaLoai" Mode="In" Type="String" />
+            <Parameter Name="TenThucUong" Mode="In" Type="String" />
+            <Parameter Name="DonGia" Mode="In" Type="Decimal" />
+            <Parameter Name="KhaDung" Mode="In" Type="Boolean" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CafeRestaurantModelStoreContainer" CdmEntityContainer="CafeRestaurantEntities">
+          <EntitySetMapping Name="Ban">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.Ban">
+              <MappingFragment StoreEntitySet="Ban">
+                <ScalarProperty Name="MaBan" ColumnName="MaBan" />
+                <ScalarProperty Name="MaTang" ColumnName="MaTang" />
+                <ScalarProperty Name="TenBan" ColumnName="TenBan" />
+                <ScalarProperty Name="TrangThai" ColumnName="TrangThai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DonHang">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.DonHang">
+              <MappingFragment StoreEntitySet="DonHang">
+                <ScalarProperty Name="MaDonHang" ColumnName="MaDonHang" />
+                <ScalarProperty Name="MaThucUong" ColumnName="MaThucUong" />
+                <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HoaDon">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.HoaDon">
+              <MappingFragment StoreEntitySet="HoaDon">
+                <ScalarProperty Name="MaHD" ColumnName="MaHD" />
+                <ScalarProperty Name="NgayHD" ColumnName="NgayHD" />
+                <ScalarProperty Name="MaNV" ColumnName="MaNV" />
+                <ScalarProperty Name="MaBan" ColumnName="MaBan" />
+                <ScalarProperty Name="MaTang" ColumnName="MaTang" />
+                <ScalarProperty Name="TongTien" ColumnName="TongTien" />
+                <ScalarProperty Name="MaSuKien" ColumnName="MaSuKien" />
+                <ScalarProperty Name="DuaTruoc" ColumnName="DuaTruoc" />
+                <ScalarProperty Name="ConLai" ColumnName="ConLai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoaiNuoc">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.LoaiNuoc">
+              <MappingFragment StoreEntitySet="LoaiNuoc">
+                <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+                <ScalarProperty Name="TenLoai" ColumnName="TenLoai" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SuKien">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.SuKien">
+              <MappingFragment StoreEntitySet="SuKien">
+                <ScalarProperty Name="MaSuKien" ColumnName="MaSuKien" />
+                <ScalarProperty Name="TenSuKien" ColumnName="TenSuKien" />
+                <ScalarProperty Name="TyLeGiam" ColumnName="TyLeGiam" />
+                <ScalarProperty Name="SoLuong" ColumnName="SoLuong" />
+                <ScalarProperty Name="ThoiGian_BD" ColumnName="ThoiGian_BD" />
+                <ScalarProperty Name="ThoiGian_KT" ColumnName="ThoiGian_KT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoan">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="TenDangNhap" ColumnName="TenDangNhap" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="MatKhau" ColumnName="MatKhau" />
+                <ScalarProperty Name="LoaiTaiKhoan" ColumnName="LoaiTaiKhoan" />
+                <ScalarProperty Name="CMND" ColumnName="CMND" />
+                <ScalarProperty Name="NgaySinh" ColumnName="NgaySinh" />
+                <ScalarProperty Name="SoDT" ColumnName="SoDT" />
+                <ScalarProperty Name="ConLam" ColumnName="ConLam" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ThucUong">
+            <EntityTypeMapping TypeName="CafeRestaurantModel.ThucUong">
+              <MappingFragment StoreEntitySet="ThucUong">
+                <ScalarProperty Name="MaThucUong" ColumnName="MaThucUong" />
+                <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+                <ScalarProperty Name="TenThucUong" ColumnName="TenThucUong" />
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="KhaDung" ColumnName="KhaDung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_ThemBan" FunctionName="CafeRestaurantModel.Store.usp_ThemBan" />
+          <FunctionImportMapping FunctionImportName="usp_ThemDonHang" FunctionName="CafeRestaurantModel.Store.usp_ThemDonHang" />
+          <FunctionImportMapping FunctionImportName="usp_ThemHoaDon" FunctionName="CafeRestaurantModel.Store.usp_ThemHoaDon" />
+          <FunctionImportMapping FunctionImportName="usp_ThemLoaiNuoc" FunctionName="CafeRestaurantModel.Store.usp_ThemLoaiNuoc" />
+          <FunctionImportMapping FunctionImportName="usp_ThemSuKien" FunctionName="CafeRestaurantModel.Store.usp_ThemSuKien" />
+          <FunctionImportMapping FunctionImportName="usp_ThemTaiKhoan" FunctionName="CafeRestaurantModel.Store.usp_ThemTaiKhoan" />
+          <FunctionImportMapping FunctionImportName="usp_ThemThucUong" FunctionName="CafeRestaurantModel.Store.usp_ThemThucUong" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
