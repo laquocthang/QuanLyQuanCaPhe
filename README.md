@@ -4,6 +4,14 @@ Sử dụng mô hình EntityFramework
 
 ## Cài đặt
 
+![Diagram](Luoc do.jpg?raw=true "Diagram")
+
+![Login Form](Capture-1.jpg?raw=true "Login Form")
+
+![Main Form](Capture-2.jpg?raw=true "Main Form")
+
+![Drink Form](Capture-3.jpg?raw=true "Drink Form")
+
 ## Lưu ý
 
 Vẫn còn một lỗi xảy ra khi thêm dữ liệu vào DataGridView!
