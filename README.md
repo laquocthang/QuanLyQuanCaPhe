@@ -4,7 +4,7 @@ Sử dụng mô hình EntityFramework
 
 ## Cài đặt
 
-![Diagram](Luoc do.png?raw=true "Diagram")
+![Diagram](Luoc do.PNG?raw=true "Diagram")
 
 ![Login Form](Capture-1.PNG?raw=true "Login Form")
 
