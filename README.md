@@ -4,13 +4,13 @@ Sử dụng mô hình EntityFramework
 
 ## Cài đặt
 
-![Diagram](Luoc do.jpg?raw=true "Diagram")
+![Diagram](Luoc do.png?raw=true "Diagram")
 
-![Login Form](Capture-1.jpg?raw=true "Login Form")
+![Login Form](Capture-1.png?raw=true "Login Form")
 
-![Main Form](Capture-2.jpg?raw=true "Main Form")
+![Main Form](Capture-2.png?raw=true "Main Form")
 
-![Drink Form](Capture-3.jpg?raw=true "Drink Form")
+![Drink Form](Capture-3.png?raw=true "Drink Form")
 
 ## Lưu ý
 
